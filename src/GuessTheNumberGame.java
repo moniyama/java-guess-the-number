@@ -6,22 +6,22 @@ public class GuessTheNumberGame {
     static int targetNumber = (int) Math.floor(Math.random()*101);
     static Scanner scanner = new Scanner(System.in);
     static boolean endGame = false;
+    static Player winner;
     private static void checkGuess(Player player) {
         int guess = player.getGuesses().getLast();
         if(isRightGuess(guess)){
             System.out.println("Parabens, " + player.getName() + "! Voce acertou!");
-            System.out.println("Tentativas: " + player.getGuesses());
-            System.out.println("Total: " + player.getGuesses().size());
             endGame = true;
+            winner = player;
         } else {
             printWrongGuessMessage(guess);
         }
     }
 
     private static boolean isRightGuess(int guess) {
-        System.out.println("targetNumber = " + targetNumber);
         return targetNumber == guess;
     }
+
     private static void printWrongGuessMessage(int guess) {
         if (guess > targetNumber) {
             System.out.println("Sorry! Too High\n");
@@ -34,6 +34,7 @@ public class GuessTheNumberGame {
         System.out.print("--- Bem vindo ao Guess the Number ---\nPara iniciar, digite seu nome: ");
 
         HumanPlayer player = new HumanPlayer();
+        ComputerPlayer bot = new ComputerPlayer();
 
         String name = scanner.nextLine();
         player.setName(name);
@@ -42,9 +43,16 @@ public class GuessTheNumberGame {
 
         while(!endGame) {
             player.askForGuess();
-            int answer = scanner.nextInt();
-            player.makeGuess(answer);
+            player.makeGuess();
             checkGuess(player);
+
+            bot.askForGuess();
+            bot.makeGuess();
+            checkGuess(bot);
         }
+
+        System.out.println("TEMOS UM VENCEDOOOOR: " + winner.getName());
+        System.out.println("Tentativas: " + player.getGuesses());
+        System.out.println("Total: " + player.getGuesses().size());
     }
 }
