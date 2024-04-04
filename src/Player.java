@@ -32,7 +32,6 @@ class HumanPlayer extends Player {
 }
 
 class ComputerPlayer extends Player{
-    String name = "Computer"; // not working
     @Override
     public void makeGuess(int num) {
         int random = (int) Math.floor(Math.random()*101);

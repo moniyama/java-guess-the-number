@@ -13,7 +13,6 @@ public class GuessTheNumberGame {
             System.out.println("Tentativas: " + player.getGuesses());
             System.out.println("Total: " + player.getGuesses().size());
             endGame = true;
-            // winner =
         } else {
             printWrongGuessMessage(guess);
         }
@@ -35,8 +34,6 @@ public class GuessTheNumberGame {
         System.out.print("--- Bem vindo ao Guess the Number ---\nPara iniciar, digite seu nome: ");
 
         HumanPlayer player = new HumanPlayer();
-//        ComputerPlayer bot = new ComputerPlayer();
-//        bot.setName("Computer"); // setar direto na class?
 
         String name = scanner.nextLine();
         player.setName(name);
@@ -47,8 +44,6 @@ public class GuessTheNumberGame {
             player.askForGuess();
             int answer = scanner.nextInt();
             player.makeGuess(answer);
-//            bot.askForGuess();
-//            bot.makeGuess();
             checkGuess(player);
         }
     }
