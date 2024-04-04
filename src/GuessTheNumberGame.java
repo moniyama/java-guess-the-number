@@ -5,28 +5,22 @@ import java.util.Scanner;
 public class GuessTheNumberGame {
     static int targetNumber = (int) Math.floor(Math.random()*101);
     static Scanner scanner = new Scanner(System.in);
-    static boolean endGame = false;
     static Player winner;
-    private static void checkGuess(Player player) {
+    private static boolean checkGuess(Player player) {
         int guess = player.getGuesses().getLast();
-        if(isRightGuess(guess)){
+        if(targetNumber == guess){
             System.out.println("Parabens, " + player.getName() + "! Voce acertou!");
-            endGame = true;
-            winner = player;
+            System.out.println("\nVENCEDOOOOR: " + player.getName());
+            System.out.println("Tentativas: " + player.getGuesses());
+            System.out.println("Total: " + player.getGuesses().size());
+            return true;
         } else {
-            printWrongGuessMessage(guess);
-        }
-    }
-
-    private static boolean isRightGuess(int guess) {
-        return targetNumber == guess;
-    }
-
-    private static void printWrongGuessMessage(int guess) {
-        if (guess > targetNumber) {
-            System.out.println("Sorry! Too High\n");
-        } else {
-            System.out.println("Sorry! Too Low\n");
+            if (guess > targetNumber) {
+                System.out.println("Sorry! Too High\n");
+            } else {
+                System.out.println("Sorry! Too Low\n");
+            }
+            return false;
         }
     }
     public static void main(String[] args) {
@@ -41,18 +35,14 @@ public class GuessTheNumberGame {
 
         System.out.println("\nUm numero de 0 a 100 foi escolhido! Tente adivinhar!\n");
 
-        while(!endGame) {
+        while(true) {
             player.askForGuess();
             player.makeGuess();
-            checkGuess(player);
+            if(checkGuess(player)) break;
 
             bot.askForGuess();
             bot.makeGuess();
-            checkGuess(bot);
+            if(checkGuess(bot)) break;
         }
-
-        System.out.println("TEMOS UM VENCEDOOOOR: " + winner.getName());
-        System.out.println("Tentativas: " + player.getGuesses());
-        System.out.println("Total: " + player.getGuesses().size());
     }
 }
